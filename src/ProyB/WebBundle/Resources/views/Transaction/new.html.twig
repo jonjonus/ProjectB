@@ -1,0 +1,46 @@
+{% extends "ProyBWebBundle::layout.html.twig" %}
+{% form_theme form 'ProyBWebBundle:Form:fields.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+    <script> var ajaxPath = "{{ ajax_path }}"; </script> {# to enable paths generation in JS file #}
+    <script src="{{ asset('js/webBundle/edit.js') }}"></script>
+{% endblock %}
+{% block title %}Transaction:New{% endblock %}
+{% block body %}
+<div class="row row-centered">
+    <div class="col-lg-12 col-centered">
+        <h1>New Transaction</h1>
+    </div>
+</div>
+<div class="row row-centered">
+    <div class="col-xs-12 col-centered">
+        {{ form_start(form) }}
+        {{ form_row(form.id) }}
+        {{ form_row(form.state) }}
+        {{ form_row(form.count) }}
+        {{ form_row(form.date) }}
+        {{ form_row(form.amount) }}
+        {{ form_row(form.comment) }}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ form_row(form.insertDate) }}
+            {{ form_row(form.insertUser) }}
+            {{ form_row(form.updateDate) }}
+            {{ form_row(form.updateUser) }}
+            {{ form_row(form.inactiveDate) }}
+            {{ form_row(form.inactiveUser) }}
+        {% endif %}
+        <div class="form-group">
+            <div class="col-xs-12">
+                <div style="float: left; padding: 6px 3px;">
+                    {{ form_widget(form.submit, {'attr': {'class': 'btn btn-success'}}) }}
+                    {{ form_end(form) }}
+                </div>
+                <div style="float: left; padding: 6px 3px;">
+                    <button type="button" class="btn btn-primary" onclick="self.location='{{ url('transactions') }}'">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

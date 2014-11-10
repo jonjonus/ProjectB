@@ -1,0 +1,14 @@
+ajax:
+    resource: "@ProyBWebBundle/Resources/config/routing/ajax.xml"
+    
+transaction:
+    resource: "@ProyBWebBundle/Resources/config/routing/transaction.xml"
+    
+admin:
+    resource: "@ProyBWebBundle/Resources/config/routing/admin.xml"
+
+user:
+    resource: "@ProyBWebBundle/Resources/config/routing/user.xml"
+
+state:
+    resource: "@ProyBWebBundle/Resources/config/routing/state.xml"

@@ -1,0 +1,62 @@
+{% extends "ProyBWebBundle::layout.html.twig" %}
+{% block title %}Transaction:Show{% endblock %}
+{% block body %}
+<div class="row">
+    <div class="col-md-4 col-md-offset-2">
+        <h1>Transaction Details</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="inputState" class="col-sm-1 control-label">State</label>
+                <div class="col-sm-2"><input type="number" class="form-control" id="inputAmount" placeholder="{{ entity.state.description }}" readonly></div>
+                <label for="inputCount" class="col-sm-1 control-label">Count</label>
+                <div class="col-sm-2"><input type="number" class="form-control" id="inputCount" placeholder="{{ count }}" readonly></div>
+            </div>
+            <div class="form-group">
+                <label for="inputDate" class="col-sm-1 control-label">Date</label>
+                <div class="col-sm-2"><input type="text" class="form-control" id="inputDate" placeholder="{{ entity.date|date("m/d/y H:i:s") }}" readonly></div>
+                <label for="inputAmount" class="col-sm-1 control-label">Amount</label>
+                <div class="col-sm-2"><input type="number" class="form-control" id="inputAmount" placeholder="{{ entity.amount }}" readonly></div>
+            </div>
+            <div class="form-group">
+                <label for="inputComment" class="col-sm-1 control-label">Comment</label>
+                <div class="col-sm-5"><textarea class="form-control" rows="3" disabled="true">{{ entity.comment }}</textarea></div>
+            </div>
+            {% if is_granted('ROLE_ADMIN') %}
+                <div class="form-group">
+                    <label for="inputInsertDate" class="col-sm-1 control-label">Insert Date</label>
+                    <div class="col-sm-2"><input type="text" class="form-control" id="inputInsertDate" placeholder="{{ entity.insertDate|date("m/d/y H:i:s") }}" readonly></div>
+                    <label for="inputInsertUser" class="col-sm-1 control-label">User</label>
+                    <div class="col-sm-2"><input type="text" class="form-control" id="inputInsertUser" placeholder="{{ entity.insertUser.username }}" readonly></div>
+                </div>
+                <div class="form-group">
+                    <label for="inputUpdateDate" class="col-sm-1 control-label">Update Date</label>
+                    <div class="col-sm-2"><input type="text" class="form-control" id="inputUpdateDate" placeholder="{{ entity.updateDate|date("m/d/y H:i:s") }}" readonly></div>
+                    <label for="inputUpdateUser" class="col-sm-1 control-label">User</label>
+                    <div class="col-sm-2"><input type="text" class="form-control" id="inputUpdateUser" placeholder="{{ entity.updateUser.username }}" readonly></div>
+                </div>
+                <div class="form-group">
+                    <label for="inputInactiveDate" class="col-sm-1 control-label">Inactive Date</label>
+                    <div class="col-sm-2"><input type="text" class="form-control" id="inputInactiveDate"placeholder="{% if entity.inactiveDate is not null %}{{ entity.inactiveDate|date("m/d/y H:i:s") }}{% endif %}" readonly></div>
+                    <label for="inputInactiveUser" class="col-sm-1 control-label">User</label>
+                    <div class="col-sm-2"><input type="text" class="form-control" id="inputInactiveUser" placeholder="{{ entity.inactiveUser.username | default("") }}" readonly></div>
+                </div>
+               <div class="form-group">
+                    <label for="inputId" class="col-sm-1 control-label">Id</label>
+                    <div class="col-sm-2"><input type="number" class="form-control" id="inputCount" placeholder="{{ entity.id }}" readonly></div>
+                </div>
+            {% endif %}
+        </form>
+        <div class="form-group">
+            <div class="col-sm-offset-3 col-sm-10">
+                <button type="button" class="btn btn-info" onclick="self.location='{{ pathEdit }}'">Edit</button>
+                <button type="button" class="btn btn-primary" onclick="self.location='{{ path('transactions') }}'">Back to List</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+        <title>{% block title %}ProyectoB Front{% endblock %}</title>
+
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="{{ asset('js/moment.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-datetimepicker.min.js') }}"></script>
+
+        {% block stylesheets %}
+        <!-- Datetimepicker -->
+        <link href="{{ asset('css/bootstrap-datetimepicker.css') }}" rel="stylesheet">
+        <!-- Bootstrap -->
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+        <!-- Bootstrap theme -->
+        <link href="{{ asset('css/bootstrap-theme.min.css') }}" rel="stylesheet">
+        <!-- Custom styles for this template -->
+        <link href="{{ asset('css/theme.css') }}" rel="stylesheet">
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+          <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        {% endblock %}
+    </head>
+    <body id="body" role="document">
+        {% block beginNavbar1 %}
+            <!-- Fixed navbar -->
+            <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+                <div class="container">
+                    <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">ProyectoB</a>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="{{ path('transactions') }}">Transactions</a></li>
+                            <li class="dropdown">
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<span class="caret"></span></a>
+                                {% endif %}
+                                <ul class="dropdown-menu" role="menu">
+                                    <li><a href="{{ path('admin_transactions') }}">Transactions</a></li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header">Entities
+                                    <li><a href="{{ path('admin_states') }}">States</a></li>
+                                    <li><a href="{{ path('admin_users') }}">Users</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="active dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user.username }}<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="{{ path('logout') }}">Logout</a></li>
+                                        {% if is_granted('ROLE_ADMIN') == false %}
+                                            <li><a href="{{ path('user_change_password') }}">Change Password</a></li>
+                                        {% endif %}
+                                    </ul>
+                            </li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        {% endblock %}
+        
+        {% block beginNavbar2 %}
+        {% endblock %}
+        
+        <div class="container-fluid" role="main">
+            {% block body %}
+            {% endblock %}
+        </div> <!-- /container -->
+        
+        {% block endNavbar2 %}
+        {% endblock %}
+
+        {% block javascripts %}
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+         <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <!-- <script src="../../assets/js/docs.min.js"></script> -->
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="{{ asset('js/ie10-viewport-bug-workaround.js') }}"></script>
+
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,18 @@
+login:
+    path:     /login
+    defaults: { _controller: ProyBSecurityBundle:Security:login }
+    
+login_check:
+    path: /login_check
+
+logout:
+    path:   /logout
+    
+password_change:
+    path:   /password_change
+    defaults: { _controller: ProyBSecurityBundle:Security:passwordChange }
+    
+password_update:
+    path:     /password_update
+    defaults: { _controller: ProyBSecurityBundle:Security:passwordUpdate }
+    methods:  [POST]

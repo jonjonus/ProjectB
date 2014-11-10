@@ -1,0 +1,5 @@
+proy_b_web:
+    resource: "@ProyBWebBundle/Resources/config/routing.yml"
+    
+security:
+    resource: "@ProyBSecurityBundle/Resources/config/routing.yml"

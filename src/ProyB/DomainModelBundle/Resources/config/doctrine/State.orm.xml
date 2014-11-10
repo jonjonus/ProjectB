@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity repository-class="ProyB\DomainModelBundle\Entity\StateRepository" name="ProyB\DomainModelBundle\Entity\State" table="tbl_state">
+    <id name="id" type="integer" column="id_state">
+      <generator strategy="AUTO"/>
+    </id>
+    <field name="description" type="text" column="description" length="65535"/>
+    <one-to-many
+        field="trxs"
+        target-entity="Transaction"
+        mapped-by="state" />
+    <many-to-many 
+        field="users" 
+        mapped-by="states" 
+        target-entity="User"/>
+  </entity>
+</doctrine-mapping>

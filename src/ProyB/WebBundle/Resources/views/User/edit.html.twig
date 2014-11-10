@@ -1,0 +1,33 @@
+{% extends "ProyBWebBundle::layout.html.twig" %}
+{% form_theme edit_form 'ProyBWebBundle:Form:fields.html.twig' %}
+{% block title %}User:Edit{% endblock %}
+
+{% block body -%}
+<h1>Edit User</h1>
+<div class="row row-centered">
+    <div class="col-xs-12">
+        {{ form_start(edit_form) }}
+        {{ form_row(edit_form.email) }}
+        {{ form_row(edit_form.password) }}
+        {{ form_row(edit_form.newPassword) }}
+        <div class="form-group">
+            <div class="col-xs-12">
+                <div style="float: left; padding: 6px 3px;">
+                    {{ form_widget(edit_form.submit, {'attr': {'class': 'btn btn-success'}}) }}
+                    {{ form_end(edit_form) }}
+                </div>
+                <div style="float: left; padding: 6px 3px;">
+                    <button type="button" class="btn btn-primary" onclick="self.location='{{ url(cancel_path) }}'">Cancel</button>
+                </div>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div style="float: left; padding: 6px 3px;">
+                        {{ form_start(delete_form) }}
+                        {{ form_widget(delete_form.submit, {'attr': {'class': 'btn btn-danger'}}) }}
+                        {{ form_end(delete_form) }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

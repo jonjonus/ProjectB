@@ -1,0 +1,56 @@
+{% extends "ProyBWebBundle::layout.html.twig" %}
+{% form_theme edit_form 'ProyBWebBundle:Form:fields.html.twig' %}
+{% block javascripts %}
+    {{ parent() }}
+    <script> var ajaxPath = "{{ ajax_path }}"; </script> {# to enable paths generation in JS file #}
+    <script src="{{ asset('js/webBundle/edit.js') }}"></script>
+{% endblock %}
+{% block title %}Transaction:Edit{% endblock %}
+
+{% block body %}
+<h1>Edit Transaction</h1>
+<div class="row row-centered">
+    <div class="col-xs-12">
+        {{ form_start(edit_form) }}
+        {{ form_row(edit_form.id) }}
+        {{ form_row(edit_form.state) }}
+        {{ form_row(edit_form.count) }}
+        {{ form_row(edit_form.date) }}
+        {{ form_row(edit_form.amount) }}
+        {{ form_row(edit_form.comment) }}
+        {% if is_granted('ROLE_ADMIN') %}
+            {{ form_row(edit_form.insertDate) }}
+            {{ form_row(edit_form.insertUser) }}
+            {{ form_row(edit_form.updateDate) }}
+            {{ form_row(edit_form.updateUser) }}
+            {{ form_row(edit_form.inactiveDate) }}
+            {{ form_row(edit_form.inactiveUser) }}
+        {% endif %}
+        <div class="form-group">
+            <div class="col-xs-12">
+                <div style="float: left; padding: 6px 3px;">
+                    {{ form_widget(edit_form.submit, {'attr': {'class': 'btn btn-success'}}) }}
+                    {{ form_end(edit_form) }}
+                </div>
+                <div style="float: left; padding: 6px 3px;">
+                    <button type="button" class="btn btn-primary" onclick="self.location='{{ url('transactions') }}'">Cancel</button>
+                </div>
+                <div style="float: left; padding: 6px 3px;">
+                    {{ form_start(inactive_form) }}
+                    {{ form_widget(inactive_form.submit, {'attr': {'class': 'btn btn-warning'}}) }}
+                    {{ form_end(inactive_form) }}
+                </div>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div style="float: left; padding: 6px 3px;">
+                        {{ form_start(delete_form) }}
+                        {{ form_widget(delete_form.submit, {'attr': {'class': 'btn btn-danger'}}) }}
+                        {{ form_end(delete_form) }}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

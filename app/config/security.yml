@@ -1,0 +1,39 @@
+security:
+    firewalls:
+        login_firewall:
+            pattern:   ^/login$
+            anonymous: ~
+        secured_area:
+            pattern:   ^/
+            form_login: ~
+            logout:
+                path:   /logout
+                target: /login
+
+    access_control:
+        - { path: ^/admin/, roles: ROLE_ADMIN }
+        # Include the following line to also secure the /admin path itself
+        - { path: ^/admin$, roles: ROLE_ADMIN }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+
+    providers:
+        chain_provider:
+            chain:
+                providers: [in_memory, user_db]
+        in_memory:
+            memory:
+                users:
+                    admin: { password: $2y$12$2dEPc8lOCmmGKaYU.BDPSeFEfAdpXeQiRaPripO3rQjRJlZrALmba, roles: 'ROLE_ADMIN' } 
+        user_db:
+            entity: { class: ProyB\DomainModelBundle\Entity\User, property: username }
+            
+    encoders:
+        Symfony\Component\Security\Core\User\User:
+            algorithm: bcrypt
+            cost: 12
+        ProyB\DomainModelBundle\Entity\User: 
+            algorithm: bcrypt
+            cost: 12
+        
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER

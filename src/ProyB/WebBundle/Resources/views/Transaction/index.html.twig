@@ -1,0 +1,117 @@
+{% extends "ProyBWebBundle::layout.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/webBundle/index.js') }}"></script>
+    <script> var ajaxPath = "{{ ajax_path }}"; </script> {# to enable paths generation in JS file #}
+    <script src="{{ asset('js/webBundle/ajaxIndex.js') }}"></script>
+    <script src="{{ asset('js/webBundle/indexNavbar.js') }}"></script>
+{% endblock %}
+
+{% block title %}Transaction:List{% endblock %}
+
+{% block beginNavbar1 %}
+    <div id="navtop">
+        {{ parent() }}
+    </div>
+{% endblock %}
+
+{% block beginNavbar2 %}
+{{ form_start(inactive_set_form, {'attr': {'id': 'form'}}) }}
+<div id="navbar2" class="navbar navbar-default subnav" role="navigation" style="position: fixed; top: 51px; width: 100%; z-index: 1020;">
+            <div style="float:left;padding: 2px;">
+                <div>
+                    <label style="font-size:smaller;">Results&nbsp;</label><span class="badge" id="count">{{ count }}</span>
+                </div>
+                <div style="float:left; margin-left: 8px">
+                    <button type="button" class="btn btn-primary btn-lg hidden-xs" href="#more" id="more">More</button>
+                    <button type="button" class="btn btn-primary btn-sm hidden-sm hidden-md hidden-lg" href="#more" id="more">More</button>
+                </div>
+            </div>
+
+            <div style="float:left;padding:2px;">
+                <div style="text-align: center">
+                    <label style="font-size:smaller;">Transaction</label>
+                </div>
+                <div style="float:left;margin-left: 9px">
+                    <button type="button" class="btn btn-success btn-lg hidden-xs" onclick="self.location='{{ path( paths.new ) }}'">New</button>
+                    <button type="button" class="btn btn-success btn-sm hidden-sm hidden-md hidden-lg" onclick="self.location='{{ path( paths.new ) }}'">New</button>
+                </div>
+            </div>
+
+            <div style="float:right;padding:2px">
+                <div style="text-align: center">
+                    <label style="font-size:smaller;">Selection</label>
+                </div>
+                
+                {# Big buttons #}
+                <div class="btn-group hidden-xs" style="float:left">
+                    <button type="button" class="btn btn-default btn-lg hidden-xs" onclick="javascript:checkboxesToggleAll(true);" href="javascript:void();">All</button>
+                    <button type="button" class="btn btn-default btn-lg hidden-xs" onclick="javascript:checkboxesToggleAll(false);" href="javascript:void();">None</button>
+                    <button type="button" class="btn btn-default btn-lg hidden-xs" onclick="javascript:checkboxesToggleInvert();" href="javascript:void();">Invert</button>
+                    <button type="button" class="btn btn-warning btn-lg hidden-xs" onclick="javascript:inactive();" href="javascript:void();">Inactive</button>
+{#                    {{ form_widget(inactive_set_form.submit, {'attr': {'class': 'btn btn-warning btn-sm'}}) }} #}
+                </div>
+                
+                {# Small buttons #}
+                <div class="btn-group hidden-sm hidden-md hidden-lg" style="float:left">
+                    <button type="button" class="btn btn-default btn-sm hidden-sm hidden-md hidden-lg" onclick="javascript:checkboxesToggleAll(true);" href="javascript:void();">All</button>
+                    <button type="button" class="btn btn-default btn-sm hidden-sm hidden-md hidden-lg" onclick="javascript:checkboxesToggleAll(false);" href="javascript:void();">None</button>
+                    <button type="button" class="btn btn-default btn-sm hidden-sm hidden-md hidden-lg" onclick="javascript:checkboxesToggleInvert();" href="javascript:void();">Invert</button>
+                    <button type="button" class="btn btn-warning btn-sm hidden-sm hidden-md hidden-lg" onclick="javascript:inactive();" href="javascript:void();">Inactive</button>
+{#                    {{ form_widget(inactive_set_form.submit, {'attr': {'class': 'btn btn-warning btn-sm'}}) }} #}
+                </div>
+            </div> 
+</div>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-lg-12"> 
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>State</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Comment</th>
+                    {% if (is_granted('ROLE_ADMIN')) and (paths.unfiltered) %}
+                        <th>Inactive</th>
+                    {% endif %}
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="tbody">
+                <div
+                {% for entity in entities %}
+                <tr>              
+                    <td>{{ entity.id }}</td>
+                    <td>{{ entity.state.description }}</td>
+                    <td>{{ entity.date|date("m/d/y") }}</td>
+                    <td>{{ entity.amount|number_format(2, '.', ',') }}</td>
+                    <td>{{ entity.comment }}</td>
+                    {% if (is_granted('ROLE_ADMIN')) and (paths.unfiltered) %}
+                        {% if entity.inactiveDate is not null %}<td>{{ entity.inactiveDate|date("m/d/y H:i:s") }}</td>{% else %}<td>-</td>{% endif %}
+                    {% endif %}
+                    <td width="120px">
+                        <div style="width:120px">
+                            <a href="{{ path(paths.show, { 'id': entity.id }) }}" title="Show"><span class="glyphicon glyphicon-eye-open"></span></a>&nbsp;&nbsp;&nbsp;
+                            <a href="{{ path( paths.edit, { 'id': entity.id }) }}" title="Edit"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;&nbsp;&nbsp;
+                            <a href="{{ path( paths.newFrom, { 'id': entity.id }) }}" title="New from"><span class="glyphicon glyphicon-export"></span></a>&nbsp;&nbsp;&nbsp;
+                            <input name="rows[{{ entity.id }}]" type="checkbox" id="rows_{{ entity.id }}">
+                        </div>
+                    </td>                        
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block endNavbar2 %}
+    {{ form_end(inactive_set_form, {'render_rest': false}) }}
+{% endblock %}

@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<routes xmlns="http://symfony.com/schema/routing"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <!-- TRANSACTIONS 
+    
+        <route id="admin_transaction_active" path="/admin/transaction/active/{id}">
+        <default key="_controller">ProyBWebBundle:Transaction:activeAdmin</default>
+        <requirement key="_method">post|put</requirement>
+    </route>
+    
+    -->
+    <route id="admin_home" path="/admin">
+        <default key="_controller">ProyBWebBundle:Transaction:index</default>
+    </route>
+    
+    <route id="admin_transactions" path="/admin/transactions">
+        <default key="_controller">ProyBWebBundle:Transaction:index</default>
+    </route>
+    
+    <route id="admin_transaction_new_from" path="/admin/transaction/new/{id}">
+        <default key="_controller">ProyBWebBundle:Transaction:new</default>
+        <requirement key="page">\d+</requirement>
+    </route>
+
+    <route id="admin_transaction_new" path="/admin/transaction/new">
+        <default key="_controller">ProyBWebBundle:Transaction:new</default>
+    </route>
+
+    <route id="admin_transaction_show" path="/admin/transaction/show/{id}">
+        <default key="_controller">ProyBWebBundle:Transaction:show</default>
+    </route>
+
+    <route id="admin_transaction_edit" path="/admin/transaction/edit/{id}">
+        <default key="_controller">ProyBWebBundle:Transaction:edit</default>
+    </route>
+
+    <route id="admin_transaction_update" path="/admin/transaction/update/{id}">
+        <default key="_controller">ProyBWebBundle:Transaction:update</default>
+        <requirement key="_method">post|put</requirement>
+    </route>
+    
+    <route id="admin_transaction_create" path="/admin/transaction/create">
+        <default key="_controller">ProyBWebBundle:Transaction:create</default>
+        <requirement key="_method">post</requirement>
+    </route>
+    
+    <!-- USERS -->
+    <route id="admin_users" path="/admin/users">
+        <default key="_controller">ProyBWebBundle:User:index</default>
+    </route>
+    
+    <route id="admin_user_create" path="/admin/user/create">
+        <default key="_controller">ProyBWebBundle:User:create</default>
+        <requirement key="_method">post</requirement>
+    </route>
+    
+    <route id="admin_user_new" path="/admin/user/new">
+        <default key="_controller">ProyBWebBundle:User:new</default>
+    </route>
+
+    <route id="admin_user_delete" path="/admin/user/delete/{id}">
+        <default key="_controller">ProyBWebBundle:User:delete</default>
+        <requirement key="_method">post|delete</requirement>
+    </route>
+    
+        <route id="admin_user_show" path="/admin/user/show/{id}">
+        <default key="_controller">ProyBWebBundle:User:show</default>
+    </route>
+
+    <route id="admin_user_edit" path="/admin/user/edit/{id}">
+        <default key="_controller">ProyBWebBundle:User:edit</default>
+    </route>
+
+    <route id="admin_user_update" path="/admin/user/update/{id}">
+        <default key="_controller">ProyBWebBundle:User:update</default>
+        <requirement key="_method">post|put</requirement>
+    </route>
+</routes>

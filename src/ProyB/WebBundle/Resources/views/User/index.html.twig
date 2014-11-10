@@ -1,0 +1,36 @@
+{% extends "ProyBWebBundle::layout.html.twig" %}
+{% block title %}User:list{% endblock %}
+{% block body %}
+<h1>Users</h1>
+
+<div class="row">
+    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Username</th>
+                    <th>Password</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Show</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for entity in entities %}
+                <tr>              
+                    <td>{{ entity.id }}</td>
+                    <td>{{ entity.username }}</td>
+                    <td>{{ entity.name     }}</td>
+                    <td>{{ entity.email    }}</td>
+                    <td><a href="{{ path('user_show', { 'id': entity.id }) }}">Show</a></td>
+                    <td><a href="{{ path('user_edit', { 'id': entity.id }) }}">Edit</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
